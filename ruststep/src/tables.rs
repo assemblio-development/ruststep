@@ -1,7 +1,7 @@
 //! Traits for espr-generated structures
 
 use serde::de;
-use std::collections::HashMap;
+use std::{collections::HashMap, marker::PhantomData};
 
 use crate::{
     ast::{DataSection, Record},
@@ -32,6 +32,42 @@ pub trait Holder: IntoOwned {
 pub trait WithVisitor {
     type Visitor: for<'de> de::Visitor<'de, Value = Self>;
     fn visitor_new() -> Self::Visitor;
+}
+
+pub struct StringVisitor {}
+
+impl<'de> de::Visitor<'de> for StringVisitor {
+    type Value = String;
+    fn expecting(&self, formatter: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        write!(formatter, "String")
+    }
+}
+
+impl WithVisitor for String {
+    type Visitor = StringVisitor;
+    fn visitor_new() -> Self::Visitor {
+        StringVisitor {}
+    }
+}
+
+pub struct ListVisitor<T: WithVisitor> {
+    phantom: PhantomData<T>,
+}
+
+impl<'de, T: WithVisitor> de::Visitor<'de> for ListVisitor<T> {
+    type Value = Vec<T>;
+    fn expecting(&self, formatter: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        write!(formatter, "Vec<String>")
+    }
+}
+
+impl<T: WithVisitor> WithVisitor for Vec<T> {
+    type Visitor = ListVisitor<T>;
+    fn visitor_new() -> Self::Visitor {
+        ListVisitor {
+            phantom: PhantomData,
+        }
+    }
 }
 
 /// Trait for tables which pulls an entity (`T`) from an entity id (`u64`)
