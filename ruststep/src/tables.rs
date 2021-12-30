@@ -50,6 +50,22 @@ impl WithVisitor for String {
     }
 }
 
+pub struct FloatVisitor {}
+
+impl<'de> de::Visitor<'de> for FloatVisitor {
+    type Value = f64;
+    fn expecting(&self, formatter: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        write!(formatter, "f64")
+    }
+}
+
+impl WithVisitor for f64 {
+    type Visitor = FloatVisitor;
+    fn visitor_new() -> Self::Visitor {
+        FloatVisitor {}
+    }
+}
+
 pub struct ListVisitor<T: WithVisitor> {
     phantom: PhantomData<T>,
 }
