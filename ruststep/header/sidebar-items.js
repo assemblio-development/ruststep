@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["FileDescription",""],["FileName",""],["FileSchema",""],["Header","STEP-file HEADER section"]]});

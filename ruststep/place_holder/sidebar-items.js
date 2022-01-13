@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["PlaceHolder","Owned value or reference through entity/value id"]]});
