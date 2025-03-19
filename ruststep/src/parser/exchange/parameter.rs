@@ -71,11 +71,14 @@ mod tests {
     fn parameter_list() {
         let (res, record) = super::untyped_parameter("(1, 2, 3)").finish().unwrap();
         assert_eq!(res, "");
-        assert_eq!(record, Parameter::List(vec![
-            Parameter::Integer(1),
-            Parameter::Integer(2),
-            Parameter::Integer(3),
-        ]));
+        assert_eq!(
+            record,
+            Parameter::List(vec![
+                Parameter::Integer(1),
+                Parameter::Integer(2),
+                Parameter::Integer(3),
+            ])
+        );
     }
 
     #[test]

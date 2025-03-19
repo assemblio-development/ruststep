@@ -12,6 +12,12 @@ In addition to original Keep-a-Changelog, we use following rules:
   - This will be checked by GitHub Actions
 - Each Pull Request MAY correspond to one or more lines in this file
 
+## Unreleased
+
+### Fixed
+
+- Fixes to support parsing of ISO13399 database plib. https://github.com/ricosjp/ruststep/pull/251
+
 ## 0.4.0 - 2024-09-20
 
 ### Added

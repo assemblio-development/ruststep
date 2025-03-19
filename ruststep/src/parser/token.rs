@@ -4,6 +4,8 @@ use crate::{
     ast::*,
     parser::{basic::*, combinator::*},
 };
+use nom::bytes::complete::tag;
+use nom::combinator::map;
 use nom::{
     branch::alt,
     character::complete::{char, digit0, digit1, multispace0, none_of, satisfy},
@@ -12,8 +14,6 @@ use nom::{
     sequence::tuple,
     Parser,
 };
-use nom::bytes::complete::tag;
-use nom::combinator::map;
 
 /// sign = `+` | `-` .
 pub fn sign(input: &str) -> ParseResult<char> {
@@ -265,7 +265,6 @@ mod tests {
         assert_eq!(res, "");
         assert_eq!(s, "vim");
     }
-
 
     #[test]
     fn escaped_string() {
